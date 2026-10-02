@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#e9a9bd" />
+  <title>VYBE — Dating, with intention.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --pink: #e9a9bd;
+      --pink-light: #f8e9ee;
+      --pink-soft: #fdf5f7;
+      --rose: #b85c78;
+      --burgundy: #64263a;
+      --cream: #fffaf7;
+      --white: #ffffff;
+      --ink: #30262a;
+      --muted: #89777d;
+      --border: #eadde1;
+      --shadow: 0 18px 50px rgba(92, 45, 61, .10);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.5;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .hidden { display: none !important; }
+
+    .serif {
+      font-family: "Playfair Display", serif;
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .center-page {
+      min-height: calc(100vh - 48px);
+      display: grid;
+      place-items: center;
+    }
+
+    .shell {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+    }
+
+    .auth-card {
+      width: min(560px, 100%);
+      margin: 30px auto;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 30px;
+      letter-spacing: .04em;
+      color: var(--burgundy);
+      font-weight: 600;
+    }
+
+    .brand-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+    }
+
+    .eyebrow {
+      color: var(--rose);
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(40px, 8vw, 72px);
+      line-height: .98;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1.05;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .lead {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 570px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 21px;
+      font-weight: 700;
+      transition: .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--burgundy);
+      color: white;
+    }
+
+    .btn-soft {
+      background: var(--pink-light);
+      color: var(--burgundy);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--ink);
+    }
+
+    .btn-danger {
+      background: #fff0f2;
+      color: #9d314c;
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    .welcome {
+      width: min(1150px, 100%);
+      min-height: calc(100vh - 48px);
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .welcome-copy {
+      padding: 25px 0;
+    }
+
+    .welcome-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .portrait {
+      min-height: 570px;
+      border-radius: 38px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(100,38,58,.12)),
+        url("https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1000&q=85")
+        center/cover;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-art {
+      min-height: 570px;
+      border-radius: 38px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(233,169,189,.32), transparent 34%),
+        radial-gradient(circle at 80% 75%, rgba(184,92,120,.18), transparent 38%),
+        var(--pink-soft);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-art::before,
+    .welcome-art::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border: 1px solid rgba(184,92,120,.22);
+      border-radius: 50%;
+    }
+
+    .welcome-art::before { top: 12%; left: 8%; }
+    .welcome-art::after { bottom: 10%; right: 7%; }
+
+    .welcome-art-inner {
+      width: min(330px, 80%);
+      position: relative;
+      z-index: 1;
+    }
+
+    .art-line {
+      display: block;
+      width: 48px;
+      height: 1px;
+      background: var(--rose);
+      margin: 0 auto 18px;
+    }
+
+    .art-word {
+      display: block;
+      font-size: clamp(40px, 8vw, 62px);
+      color: var(--burgundy);
+      margin-bottom: 18px;
+    }
+
+    .welcome-art p {
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 260px;
+      margin: auto;
+    }
+
+    .empty-discover {
+      min-height: 520px;
+      padding: 50px 35px;
+      display: grid;
+      place-items: center;
+      align-content: center;
+      text-align: center;
+    }
+
+    .empty-list {
+      max-width: 760px;
+      text-align: center;
+      padding: 45px 25px;
+      margin-top: 22px;
+    }
+
+    .empty-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 14px;
+      background: var(--pink-light);
+      color: var(--rose);
+      font-size: 23px;
+    }
+
+    .chat-empty {
+      text-align: center;
+      margin: auto;
+      padding: 45px 20px;
+    }
+
+    .portrait-label {
+      position: absolute;
+      left: 22px;
+      bottom: 22px;
+      right: 22px;
+      background: rgba(255,250,247,.9);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 17px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 17px;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 13px 14px;
+      outline: none;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    textarea {
+      min-height: 115px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 4px var(--pink-soft);
+    }
+
+    .checkline {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 15px 0 22px;
+    }
+
+    .checkline input {
+      width: auto;
+      margin-top: 3px;
+    }
+
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--muted);
+      padding: 9px 13px;
+      border-radius: 999px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 13px;
+    }
+
+    .chip.active {
+      background: var(--pink-light);
+      border-color: var(--pink);
+      color: var(--burgundy);
+      font-weight: 700;
+    }
+
+    .step {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 25px;
+    }
+
+    .step span {
+      height: 7px;
+      flex: 1;
+      border-radius: 99px;
+      background: var(--pink-light);
+    }
+
+    .step span.active {
+      background: var(--pink);
+    }
+
+    .photo-box {
+      border: 1px dashed #d6bdc5;
+      background: var(--pink-soft);
+      border-radius: 22px;
+      min-height: 180px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .photo-preview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .photo-preview img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+
+    .preview-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .preview-photo {
+      width: 100%;
+      height: 430px;
+      object-fit: cover;
+    }
+
+    .preview-body {
+      padding: 22px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .tag {
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: var(--pink-soft);
+      color: var(--burgundy);
+      font-size: 12px;
+    }
+
+    /* App */
+    .app {
+      min-height: 100vh;
+      background: var(--cream);
+      padding-bottom: 88px;
+    }
+
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255,250,247,.94);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .app-header-inner {
+      max-width: 1180px;
+      margin: auto;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .profile-mini {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .mini-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .app-main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .discover-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 600px) 1fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .dating-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .dating-image {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+    }
+
+    .dating-body {
+      padding: 23px;
+    }
+
+    .dating-name {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .vibe {
+      background: var(--pink-light);
+      color: var(--burgundy);
+      padding: 8px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .round-action {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 21px;
+    }
+
+    .round-action.like {
+      background: var(--burgundy);
+      color: white;
+      border-color: var(--burgundy);
+    }
+
+    .side-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 23px;
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+
+    .compatibility {
+      height: 10px;
+      background: var(--pink-light);
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .compatibility div {
+      height: 100%;
+      width: 87%;
+      background: var(--rose);
+      border-radius: inherit;
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+      max-width: 760px;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 13px;
+      border-radius: 19px;
+    }
+
+    .list-item img {
+      width: 62px;
+      height: 62px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    .list-main {
+      flex: 1;
+    }
+
+    .chat-box {
+      max-width: 760px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .chat-head {
+      padding: 15px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .messages {
+      min-height: 380px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: #fffdfc;
+    }
+
+    .message {
+      max-width: 75%;
+      padding: 10px 13px;
+      border-radius: 17px;
+      font-size: 14px;
+    }
+
+    .message.them {
+      align-self: flex-start;
+      background: var(--pink-light);
+      color: var(--burgundy);
+      border-bottom-left-radius: 5px;
+    }
+
+    .message.me {
+      align-self: flex-end;
+      background: var(--burgundy);
+      color: white;
+      border-bottom-right-radius: 5px;
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 9px;
+      padding: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .chat-input input {
+      border-radius: 999px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(15px);
+      border-top: 1px solid var(--border);
+    }
+
+    .bottom-nav-inner {
+      max-width: 700px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .nav-btn {
+      border: 0;
+      background: transparent;
+      padding: 12px 7px 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .nav-btn.active {
+      color: var(--burgundy);
+      font-weight: 700;
+    }
+
+    .nav-icon {
+      display: block;
+      font-size: 19px;
+      margin-bottom: 2px;
+    }
+
+    .profile-page {
+      max-width: 760px;
+    }
+
+    .profile-hero {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      padding: 18px;
+      margin-bottom: 15px;
+    }
+
+    .profile-hero img {
+      width: 105px;
+      height: 105px;
+      object-fit: cover;
+      border-radius: 22px;
+    }
+
+    .setting {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid var(--border);
+      background: white;
+      padding: 16px;
+      border-radius: 17px;
+      margin-bottom: 9px;
+      text-align: left;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 95px;
+      transform: translateX(-50%) translateY(15px);
+      background: var(--burgundy);
+      color: white;
+      padding: 12px 17px;
+      border-radius: 999px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s;
+      z-index: 100;
+      font-size: 13px;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .small-link {
+      border: 0;
+      background: transparent;
+      color: var(--rose);
+      padding: 0;
+      font-weight: 700;
+    }
+
+    @media (max-width: 820px) {
+      .welcome {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .welcome-art {
+        min-height: 420px;
+      }
+
+      .discover-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-card {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        padding: 14px;
+      }
+
+      .center-page {
+        min-height: calc(100vh - 28px);
+      }
+
+      .auth-card {
+        padding: 22px 18px;
+        border-radius: 24px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .welcome-art {
+        min-height: 380px;
+        border-radius: 28px;
+      }
+
+      .dating-image {
+        height: 430px;
+      }
+
+      .app-main {
+        padding: 24px 14px;
+      }
+
+      .preview-photo {
+        height: 380px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- WELCOME -->
+  <section id="welcomePage" class="page center-page">
+    <div class="welcome">
+      <div class="welcome-copy">
+        <div class="logo">VYBE</div>
+        <div style="height:60px"></div>
+        <div class="eyebrow">Dating, with intention.</div>
+        <h1>Find someone you actually <em>vibe</em> with.</h1>
+        <p class="lead">
+          A calm, beautiful dating space for meeting people who match your energy,
+          interests and intentions.
+        </p>
+
+        <div class="welcome-actions">
+          <button class="btn btn-primary" onclick="showPage('signupPage')">Create an account</button>
+          <button class="btn btn-soft" onclick="showPage('loginPage')">Log in</button>
+        </div>
+
+        <p class="muted" style="font-size:12px;margin-top:22px">
+          18+ only. Be honest about what you're looking for.
+        </p>
+      </div>
+
+      <div class="welcome-art">
+        <div class="welcome-art-inner">
+          <span class="art-line"></span>
+          <span class="art-word serif">your people.</span>
+          <span class="art-line"></span>
+          <p>Take your time. Meet people who feel like a good fit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGN UP -->
+  <section id="signupPage" class="page hidden">
+    <div class="auth-card">
+      <div class="brand-row">
+        <div class="logo">VYBE</div>
+        <button class="small-link" onclick="showPage('welcomePage')">Back</button>
+      </div>
+
+      <div class="eyebrow">Step 1 of 3</div>
+      <h2>Create your account</h2>
+      <p class="muted">Let's get the basics out of the way, then we'll build your profile.</p>
+
+      <div class="step">
+        <span class="active"></span><span></span><span></span>
+      </div>
+
+      <form id="signupForm">
+        <div class="form-grid">
+          <div class="field full">
+            <label>Email address</label>
+            <input id="signupEmail" type="email" required placeholder="you@example.com">
+          </div>
+
+          <div class="field">
+            <label>Password</label>
+            <input id="signupPassword" type="password" minlength="8" required placeholder="At least 8 characters">
+          </div>
+
+          <div class="field">
+            <label>Confirm password</label>
+            <input id="signupConfirm" type="password" minlength="8" required placeholder="Repeat your password">
+          </div>
+
+          <div class="field">
+            <label>Phone number <span class="muted">(optional)</span></label>
+            <input id="signupPhone" type="tel" placeholder="+234...">
+          </div>
+
+          <div class="field">
+            <label>Date of birth</label>
+            <input id="signupDob" type="date" required>
+          </div>
+        </div>
+
+        <label class="checkline">
+          <input id="terms" type="checkbox" required>
+          <span>I confirm that I am 18 or older and agree to the site's terms and privacy rules.</span>
+        </label>
+
+        <button class="btn btn-primary btn-full" type="submit">Continue</button>
+      </form>
+
+      <p class="muted" style="font-size:13px;text-align:center;margin-top:20px">
+        Already have an account?
+        <button class="small-link" onclick="showPage('loginPage')">Log in</button>
+      </p>
+    </div>
+  </section>
+
+  <!-- LOGIN -->
+  <section id="loginPage" class="page hidden center-page">
+    <div class="auth-card">
+      <div class="brand-row">
+        <div class="logo">VYBE</div>
+        <button class="small-link" onclick="showPage('welcomePage')">Back</button>
+      </div>
+
+      <div class="eyebrow">Welcome back</div>
+      <h2>Log in</h2>
+      <p class="muted">Good to see you again.</p>
+
+      <form id="loginForm">
+        <div class="field">
+          <label>Email address</label>
+          <input id="loginEmail" type="email" required placeholder="you@example.com">
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input id="loginPassword" type="password" required placeholder="Your password">
+        </div>
+
+        <button class="btn btn-primary btn-full" type="submit">Log in</button>
+      </form>
+
+      <p class="muted" style="font-size:13px;text-align:center;margin-top:20px">
+        Don't have an account?
+        <button class="small-link" onclick="showPage('signupPage')">Create one</button>
+      </p>
+    </div>
+  </section>
+
+  <!-- PROFILE SETUP -->
+  <section id="profilePage" class="page hidden">
+    <div class="auth-card">
+      <div class="brand-row">
+        <div class="logo">VYBE</div>
+      </div>
+
+      <div class="eyebrow">Step 2 of 3</div>
+      <h2>Build your profile</h2>
+      <p class="muted">Give people a little idea of who you are.</p>
+
+      <div class="step">
+        <span class="active"></span><span class="active"></span><span></span>
+      </div>
+
+      <form id="profileForm">
+        <div class="form-grid">
+          <div class="field">
+            <label>First name</label>
+            <input id="profileName" required placeholder="Your first name">
+          </div>
+
+          <div class="field">
+            <label>Age</label>
+            <input id="profileAge" type="number" min="18" max="100" required placeholder="22">
+          </div>
+
+          <div class="field">
+            <label>Gender</label>
+            <select id="profileGender" required>
+              <option value="">Choose one</option>
+              <option>Woman</option>
+              <option>Man</option>
+              <option>Non-binary</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Location</label>
+            <input id="profileLocation" required placeholder="City, country">
+          </div>
+
+          <div class="field full">
+            <label>Interested in</label>
+            <div class="chip-group" data-group="orientation">
+              <button type="button" class="chip" data-value="Men">Men</button>
+              <button type="button" class="chip" data-value="Women">Women</button>
+              <button type="button" class="chip" data-value="Everyone">Everyone</button>
+            </div>
+          </div>
+
+          <div class="field full">
+            <label>I'm looking for</label>
+            <div class="chip-group" data-group="intention">
+              <button type="button" class="chip" data-value="Long-term">Long-term</button>
+              <button type="button" class="chip" data-value="Casual">Casual</button>
+              <button type="button" class="chip" data-value="Friendship">Friendship</button>
+              <button type="button" class="chip" data-value="Still figuring it out">Still figuring it out</button>
+            </div>
+          </div>
+
+          <div class="field full">
+            <label>Bio</label>
+            <textarea id="profileBio" maxlength="500" placeholder="What are you like? What do you love? What makes you laugh?"></textarea>
+          </div>
+
+          <div class="field full">
+            <label>Your vibe</label>
+            <div class="chip-group" data-group="vibe">
+              <button type="button" class="chip" data-value="Funny">Funny</button>
+              <button type="button" class="chip" data-value="Creative">Creative</button>
+              <button type="button" class="chip" data-value="Social">Social</button>
+              <button type="button" class="chip" data-value="Romantic">Romantic</button>
+              <button type="button" class="chip" data-value="Adventurous">Adventurous</button>
+              <button type="button" class="chip" data-value="Chill">Chill</button>
+            </div>
+          </div>
+
+          <div class="field full">
+            <label>Interests</label>
+            <div class="chip-group" data-group="interests">
+              <button type="button" class="chip" data-value="Music">Music</button>
+              <button type="button" class="chip" data-value="Movies">Movies</button>
+              <button type="button" class="chip" data-value="Gaming">Gaming</button>
+              <button type="button" class="chip" data-value="Food">Food</button>
+              <button type="button" class="chip" data-value="Travel">Travel</button>
+              <button type="button" class="chip" data-value="Books">Books</button>
+              <button type="button" class="chip" data-value="Fitness">Fitness</button>
+              <button type="button" class="chip" data-value="Art">Art</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-full" type="submit">Continue</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- PHOTO SETUP -->
+  <section id="photoPage" class="page hidden center-page">
+    <div class="auth-card">
+      <div class="brand-row">
+        <div class="logo">VYBE</div>
+      </div>
+
+      <div class="eyebrow">Step 3 of 3</div>
+      <h2>Add your photos</h2>
+      <p class="muted">Choose up to six. Your first photo becomes your main profile photo.</p>
+
+      <div class="step">
+        <span class="active"></span><span class="active"></span><span class="active"></span>
+      </div>
+
+      <div class="photo-box">
+        <div>
+          <div style="font-size:32px;margin-bottom:8px">♡</div>
+          <strong>Add a few photos you actually like.</strong>
+          <p class="muted" style="font-size:13px">JPG, PNG or WEBP. Up to 6 photos.</p>
+          <input id="photoInput" type="file" accept="image/*" multiple style="margin-top:10px">
+        </div>
+      </div>
+
+      <div id="photoPreview" class="photo-preview"></div>
+
+      <button class="btn btn-primary btn-full" style="margin-top:20px" onclick="goToPreview()">Preview my profile</button>
+    </div>
+  </section>
+
+  <!-- PROFILE PREVIEW -->
+  <section id="previewPage" class="page hidden center-page">
+    <div class="shell">
+      <div style="text-align:center;margin-bottom:20px">
+        <div class="eyebrow">Almost there</div>
+        <h2>This is how your profile will look.</h2>
+        <p class="muted">You can change any of this later.</p>
+      </div>
+
+      <div id="previewCard" class="preview-card"></div>
+
+      <div style="display:flex;justify-content:center;gap:10px;margin-top:20px;flex-wrap:wrap">
+        <button class="btn btn-outline" onclick="showPage('profilePage')">Edit profile</button>
+        <button class="btn btn-primary" onclick="enterApp()">Enter VYBE</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN APP -->
+  <section id="appPage" class="hidden app">
+    <header class="app-header">
+      <div class="app-header-inner">
+        <div class="logo">VYBE</div>
+        <div class="profile-mini">
+          <span id="headerName">You</span>
+          <div id="headerAvatar" class="mini-avatar" style="background:var(--pink-light);display:grid;place-items:center;color:var(--rose);font-size:18px">♡</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+
+      <!-- DISCOVER -->
+      <div id="discoverView" class="view active">
+        <div class="eyebrow">Discover</div>
+        <h2>See who's around.</h2>
+        <p class="muted">We'll use your preferences to help you find people who make sense for you.</p>
+
+        <div class="discover-layout" style="margin-top:22px">
+          <div>
+            <div class="dating-card empty-discover">
+              <div class="empty-icon">♡</div>
+              <h3 class="serif">Your next connection starts here.</h3>
+              <p class="muted">
+                Once real people join VYBE, you'll see profiles here based on
+                what you're looking for and the kind of person you click with.
+              </p>
+              <button class="btn btn-soft" onclick="toast('Your preferences will be used when real profiles are available.')">
+                Check my preferences
+              </button>
+            </div>
+          </div>
+
+          <aside>
+            <div class="side-card">
+              <strong>How it works</strong>
+              <p class="muted" style="font-size:13px;margin:8px 0 0">
+                Set your preferences, discover people, like someone you're into,
+                and chat when the feeling is mutual.
+              </p>
+            </div>
+
+            <div class="side-card">
+              <strong>Good to know</strong>
+              <p class="muted" style="font-size:13px;margin:8px 0 0">
+                VYBE is for adults 18+. Keep your personal information private
+                and report anything that makes you uncomfortable.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- LIKES -->
+      <div id="likesView" class="view">
+        <div class="eyebrow">Likes</div>
+        <h2>Your likes.</h2>
+        <p class="muted">When someone likes you, they'll show up here.</p>
+
+        <div class="side-card empty-list">
+          <div class="empty-icon">♡</div>
+          <strong>No likes yet.</strong>
+          <p class="muted" style="font-size:13px">
+            That's okay. Your likes and new connections will appear here as VYBE grows.
+          </p>
+        </div>
+      </div>
+
+      <!-- MATCHES -->
+      <div id="matchesView" class="view">
+        <div class="eyebrow">Matches</div>
+        <h2>Your matches.</h2>
+        <p class="muted">When you both like each other, you'll find the match here.</p>
+
+        <div class="list" style="margin-top:22px">
+          <div class="list-item" onclick="openChat('Amara')">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80">
+            <div class="list-main">
+              <strong>Amara, 22</strong>
+              <div class="muted" style="font-size:13px">You matched · Say hello</div>
+            </div>
+            <span>›</span>
+            <!-- MATCHES -->
+      <div id="matchesView" class="view">
+        <div class="eyebrow">Matches</div>
+        <h2>Your matches.</h2>
+        <p class="muted">When you both like each other, you'll find the match here.</p>
+
+        <div class="side-card empty-list">
+          <div class="empty-icon">✦</div>
+          <strong>No matches yet.</strong>
+          <p class="muted" style="font-size:13px">
+            Your conversations will live here once you make a mutual connection.
+          </p>
+        </div>
+      </div>
+
+      <!-- CHAT -->
+      <div id="chatView" class="view">
+        <button class="small-link" onclick="showView('matchesView')">← Back to matches</button>
+
+        <div class="chat-box" style="margin-top:16px">
+          <div class="chat-head">
+            <div id="chatAvatar" class="mini-avatar" style="background:var(--pink-light);display:grid;place-items:center;color:var(--rose)">♡</div>
+            <div>
+              <strong id="chatName">Amara</strong>
+              <div class="muted" style="font-size:12px">Matched</div>
+            </div>
+          </div>
+
+          <div id="messages" class="messages">
+            <div class="chat-empty">
+              <div class="empty-icon">♡</div>
+              <strong>Your chats will appear here.</strong>
+              <p class="muted" style="font-size:13px">
+                Match with someone first, then start the conversation.
+              </p>
+            </div>
+          </div>
+
+          <form id="chatForm" class="chat-input">
+            <input id="chatMessage" placeholder="Write a message..." autocomplete="off">
+            <button class="btn btn-primary" type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- ME -->
+      <div id="meView" class="view">
+        <div class="profile-page">
+          <div class="eyebrow">Me</div>
+          <h2>Your profile.</h2>
+
+          <div class="profile-hero">
+            <div id="myProfileImage" style="width:105px;height:105px;border-radius:22px;background:var(--pink-light);display:grid;place-items:center;color:var(--rose);font-size:28px">♡</div>
+            <div>
+              <h3 id="myProfileName">Your name</h3>
+              <div id="myProfileMeta" class="muted">22 · Location</div>
+              <div id="myProfileTags" class="tag-row"></div>
+            </div>
+          </div>
+
+          <button class="setting" onclick="toast('Profile editing will be connected to your database next.')">
+            <span><strong>Edit profile</strong><br><small class="muted">Photos, bio, interests and preferences</small></span>
+            <span>›</span>
+          </button>
+
+          <button class="setting" onclick="toast('Privacy controls will be connected next.')">
+            <span><strong>Privacy & safety</strong><br><small class="muted">Visibility and account protection</small></span>
+            <span>›</span>
+          </button>
+
+          <button class="setting" onclick="toast('Blocked people')">
+            <span><strong>Blocked people</strong><br><small class="muted">Manage people you don't want to interact with</small></span>
+            <span>›</span>
+          </button>
+
+          <button class="setting" onclick="toast('Help & report')">
+            <span><strong>Help & report</strong><br><small class="muted">Get help or report an issue</small></span>
+            <span>›</span>
+          </button>
+
+          <button class="btn btn-danger btn-full" style="margin-top:12px" onclick="logout()">Log out</button>
+        </div>
+      </div>
+
+    </main>
+
+    <nav class="bottom-nav">
+      <div class="bottom-nav-inner">
+        <button class="nav-btn active" data-view="discoverView" onclick="showView('discoverView', this)">
+          <span class="nav-icon">♡</span>Discover
+        </button>
+        <button class="nav-btn" data-view="likesView" onclick="showView('likesView', this)">
+          <span class="nav-icon">♡</span>Likes
+        </button>
+        <button class="nav-btn" data-view="matchesView" onclick="showView('matchesView', this)">
+          <span class="nav-icon">✦</span>Matches
+        </button>
+        <button class="nav-btn" data-view="meView" onclick="showView('meView', this)">
+          <span class="nav-icon">○</span>Me
+        </button>
+      </div>
+    </nav>
+  </section>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const state = {
+      profile: JSON.parse(localStorage.getItem("vybeProfile") || "null"),
+      photos: [],
+      selections: {
+        orientation: [],
+        intention: [],
+        vibe: [],
+        interests: []
+      }
+    };
+
+    const pages = [
+      "welcomePage",
+      "signupPage",
+      "loginPage",
+      "profilePage",
+      "photoPage",
+      "previewPage",
+      "appPage"
+    ];
+
+    function showPage(id) {
+      pages.forEach(page => {
+        document.getElementById(page).classList.toggle("hidden", page !== id);
+      });
+      window.scrollTo(0, 0);
+    }
+
+    function showView(id, button) {
+      document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+      const target = document.getElementById(id);
+      if (target) target.classList.add("active");
+
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      if (button) {
+        button.classList.add("active");
+      } else {
+        const matching = document.querySelector('.nav-btn[data-view="' + id + '"]');
+        if (matching) matching.classList.add("active");
+      }
+
+      window.scrollTo(0, 0);
+    }
+
+    function toast(message) {
+      const el = document.getElementById("toast");
+      el.textContent = message;
+      el.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
+    }
+
+    document.querySelectorAll(".chip-group").forEach(group => {
+      group.addEventListener("click", event => {
+        const chip = event.target.closest(".chip");
+        if (!chip) return;
+
+        const type = group.dataset.group;
+        const value = chip.dataset.value;
+
+        if (type === "orientation" || type === "intention") {
+          group.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+          state.selections[type] = [value];
+          chip.classList.add("active");
+        } else {
+          chip.classList.toggle("active");
+          if (chip.classList.contains("active")) {
+            if (!state.selections[type].includes(value)) {
+              state.selections[type].push(value);
+            }
+          } else {
+            state.selections[type] = state.selections[type].filter(v => v !== value);
+          }
+        }
+      });
+    });
+
+    document.getElementById("signupForm").addEventListener("submit", event => {
+      event.preventDefault();
+
+      const password = document.getElementById("signupPassword").value;
+      const confirm = document.getElementById("signupConfirm").value;
+
+      if (password !== confirm) {
+        toast("Your passwords don't match.");
+        return;
+      }
+
+      if (password.length < 8) {
+        toast("Password must be at least 8 characters.");
+        return;
+      }
+
+      // DEMO ONLY:
+      // The password is intentionally NOT stored in localStorage.
+      localStorage.setItem("vybeEmail", document.getElementById("signupEmail").value);
+
+      showPage("profilePage");
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", event => {
+      event.preventDefault();
+      toast("We'll connect your account to real login tonight.");
+      enterApp();
+    });
+
+    document.getElementById("profileForm").addEventListener("submit", event => {
+      event.preventDefault();
+
+      if (!state.selections.orientation.length) {
+        toast("Choose who you're interested in.");
+        return;
+      }
+
+      if (!state.selections.intention.length) {
+        toast("Choose what you're looking for.");
+        return;
+      }
+
+      state.profile = {
+        name: document.getElementById("profileName").value.trim(),
+        age: document.getElementById("profileAge").value,
+        gender: document.getElementById("profileGender").value,
+        location: document.getElementById("profileLocation").value.trim(),
+        interestedIn: state.selections.orientation,
+        intention: state.selections.intention,
+        bio: document.getElementById("profileBio").value.trim(),
+        vibe: [...state.selections.vibe],
+        interests: [...state.selections.interests]
+      };
+
+      localStorage.setItem("vybeProfile", JSON.stringify(state.profile));
+      showPage("photoPage");
+    });
+
+    document.getElementById("photoInput").addEventListener("change", event => {
+      state.photos = [];
+      const files = Array.from(event.target.files).slice(0, 6);
+
+      const preview = document.getElementById("photoPreview");
+      preview.innerHTML = "";
+
+      files.forEach(file => {
+        const reader = new FileReader();
+
+        reader.onload = e => {
+          state.photos.push(e.target.result);
+
+          const img = document.createElement("img");
+          img.src = e.target.result;
+          img.alt = "Profile photo";
+          preview.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);
+      });
+
+      if (files.length > 6) toast("Only the first 6 photos will be used.");
+    });
+
+    function goToPreview() {
+      if (!state.profile) {
+        toast("Please complete your profile first.");
+        showPage("profilePage");
+        return;
+      }
+
+      const fallback =
+        "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
+          '<svg xmlns="http://www.w3.org/2000/svg" width="700" height="700" viewBox="0 0 700 700"><rect width="700" height="700" fill="#f8e9ee"/><text x="350" y="350" text-anchor="middle" dominant-baseline="middle" fill="#b85c78" font-family="serif" font-size="34">Your photo</text></svg>'
+        );
+
+      const image = state.photos[0] || fallback;
+      const tags = [
+        ...(state.profile.vibe || []),
+        ...(state.profile.interests || [])
+      ].slice(0, 8);
+
+      document.getElementById("previewCard").innerHTML = `
+        <img class="preview-photo" src="${image}" alt="Your profile">
+        <div class="preview-body">
+          <h2 style="font-size:34px;margin-bottom:2px">
+            ${escapeHtml(state.profile.name)}, ${escapeHtml(state.profile.age)}
+          </h2>
+          <div class="muted">${escapeHtml(state.profile.location)}</div>
+
+          <div class="tag-row">
+            ${tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("")}
+          </div>
+
+          <p>${escapeHtml(state.profile.bio || "Add a little about yourself.")}</p>
+
+          <div class="muted" style="font-size:13px">
+            Interested in ${escapeHtml((state.profile.interestedIn || []).join(", "))}<br>
+            Looking for ${escapeHtml((state.profile.intention || []).join(", "))}
+          </div>
+        </div>
+      `;
+
+      showPage("previewPage");
+    }
+
+    function enterApp() {
+      if (!state.profile) {
+        state.profile = {
+          name: "You",
+          age: "22",
+          location: "Your city",
+          vibe: [],
+          interests: []
+        };
+      }
+
+      document.getElementById("headerName").textContent = state.profile.name || "You";
+      document.getElementById("myProfileName").textContent =
+        `${state.profile.name || "You"}, ${state.profile.age || ""}`;
+
+      document.getElementById("myProfileMeta").textContent =
+        `${state.profile.age || ""} · ${state.profile.location || ""}`;
+
+      const tags = [
+        ...(state.profile.vibe || []),
+        ...(state.profile.interests || [])
+      ].slice(0, 8);
+
+      document.getElementById("myProfileTags").innerHTML =
+        tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("");
+
+      if (state.photos[0]) {
+        const headerAvatar = document.getElementById("headerAvatar");
+        headerAvatar.style.backgroundImage = `url("${state.photos[0]}")`;
+        headerAvatar.style.backgroundSize = "cover";
+        headerAvatar.textContent = "";
+
+        const profileImage = document.getElementById("myProfileImage");
+        profileImage.style.backgroundImage = `url("${state.photos[0]}")`;
+        profileImage.style.backgroundSize = "cover";
+        profileImage.textContent = "";
+      }
+
+      showPage("appPage");
+      showView("discoverView");
+    }
+
+    function likeProfile() {
+      toast("Likes will work once real profiles are connected.");
+    }
+
+    function passProfile() {
+      toast("We'll add real profile discovery when the backend is connected.");
+    }
+
+    function makeMatch(name) {
+      toast("Matching will work with real accounts.");
+    }
+
+    function openChat(name) {
+      toast("Chat will be available once you have a real match.");
+    }
+
+    document.getElementById("chatForm").addEventListener("submit", event => {
+      event.preventDefault();
+
+      const input = document.getElementById("chatMessage");
+      const message = input.value.trim();
+
+      if (!message) return;
+
+      const bubble = document.createElement("div");
+      bubble.className = "message me";
+      bubble.textContent = message;
+
+      document.getElementById("messages").appendChild(bubble);
+      input.value = "";
+
+      const messages = document.getElementById("messages");
+      messages.scrollTop = messages.scrollHeight;
+
+      setTimeout(() => {
+        const reply = document.createElement("div");
+        reply.className = "message them";
+        reply.textContent = "Haha, I like that. Tell me more 👀";
+        messages.appendChild(reply);
+        messages.scrollTop = messages.scrollHeight;
+      }, 900);
+    });
+
+    function logout() {
+      showPage("welcomePage");
+      toast("Logged out of the demo.");
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // If a profile was already saved during this demo, keep it available.
+    if (state.profile) {
+      document.getElementById("profileName").value = state.profile.name || "";
+      document.getElementById("profileAge").value = state.profile.age || "";
+      document.getElementById("profileGender").value = state.profile.gender || "";
+      document.getElementById("profileLocation").value = state.profile.location || "";
+      document.getElementById("profileBio").value = state.profile.bio || "";
+    }
+  </script>
+</body>
+</html>
